@@ -1,0 +1,19 @@
+name: NexifyMinecraft
+version: '${project.version}'
+main: gg.nexify.minecraft.NexifyPlugin
+api-version: '1.13'
+description: Nexify store delivery plugin
+authors: [Nexify]
+website: https://nexify.gg
+softdepend: [Vault]
+
+commands:
+  nexify:
+    description: Nexify plugin commands
+    usage: /nexify <reload|status|check>
+    permission: nexify.admin
+
+permissions:
+  nexify.admin:
+    description: Access to Nexify admin commands
+    default: op

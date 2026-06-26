@@ -1,0 +1,19 @@
+nexify:
+  # Your Nexify store API token
+  api-token: "YOUR_API_TOKEN_HERE"
+
+  # How often to check for pending deliveries (in seconds)
+  poll-interval: 30
+
+  # API base URL (do not change unless instructed)
+  api-url: "https://api.nexify.gg"
+
+messages:
+  prefix: "&8[&6Nexify&8] "
+  delivery-success: "&aVocê recebeu um produto da sua compra: &f{product}"
+  delivery-pending: "&eVocê tem &f{count} &eproduto(s) pendente(s) da sua loja. Entregando..."
+  item-inventory-full: "&cSeu inventário estava cheio. O item &f{item} &cfoi dropado no chão."
+
+# Prefix for item drops when inventory is full
+# Items will be dropped at the player's feet if inventory is full
+drop-items-when-full: true

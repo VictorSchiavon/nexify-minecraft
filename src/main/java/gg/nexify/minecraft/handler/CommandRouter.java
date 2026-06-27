@@ -26,14 +26,34 @@ public class CommandRouter {
     private final Map<String, CommandHandler> handlers = new HashMap<>();
 
     public CommandRouter(NexifyPlugin plugin) {
-        handlers.put("minecraft:additem",      new ItemHandler(plugin, true));
-        handlers.put("minecraft:removeitem",   new ItemHandler(plugin, false));
-        handlers.put("minecraft:addmoney",     new MoneyHandler(plugin, true));
-        handlers.put("minecraft:removemoney",  new MoneyHandler(plugin, false));
-        handlers.put("minecraft:addgroup",     new GroupHandler(plugin, GroupHandler.Action.ADD));
-        handlers.put("minecraft:removegroup",  new GroupHandler(plugin, GroupHandler.Action.REMOVE));
-        handlers.put("minecraft:addtempgroup", new GroupHandler(plugin, GroupHandler.Action.ADD_TEMP));
-        handlers.put("minecraft:command",      new RawCommandHandler(plugin));
+        ItemHandler addItem    = new ItemHandler(plugin, true);
+        ItemHandler removeItem = new ItemHandler(plugin, false);
+        MoneyHandler addMoney    = new MoneyHandler(plugin, true);
+        MoneyHandler removeMoney = new MoneyHandler(plugin, false);
+        GroupHandler addGroup    = new GroupHandler(plugin, GroupHandler.Action.ADD);
+        GroupHandler removeGroup = new GroupHandler(plugin, GroupHandler.Action.REMOVE);
+        GroupHandler addTempGroup = new GroupHandler(plugin, GroupHandler.Action.ADD_TEMP);
+        RawCommandHandler rawCmd = new RawCommandHandler(plugin);
+
+        // minecraft:* namespace
+        handlers.put("minecraft:additem",      addItem);
+        handlers.put("minecraft:removeitem",   removeItem);
+        handlers.put("minecraft:addmoney",     addMoney);
+        handlers.put("minecraft:removemoney",  removeMoney);
+        handlers.put("minecraft:addgroup",     addGroup);
+        handlers.put("minecraft:removegroup",  removeGroup);
+        handlers.put("minecraft:addtempgroup", addTempGroup);
+        handlers.put("minecraft:command",      rawCmd);
+
+        // fivemarket:* namespace (same store, different game tag)
+        handlers.put("fivemarket:additem",      addItem);
+        handlers.put("fivemarket:removeitem",   removeItem);
+        handlers.put("fivemarket:addmoney",     addMoney);
+        handlers.put("fivemarket:removemoney",  removeMoney);
+        handlers.put("fivemarket:addgroup",     addGroup);
+        handlers.put("fivemarket:removegroup",  removeGroup);
+        handlers.put("fivemarket:addtempgroup", addTempGroup);
+        handlers.put("fivemarket:command",      rawCmd);
     }
 
     /**

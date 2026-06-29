@@ -57,7 +57,7 @@ public class DeliveryManager {
 
         Player player = Bukkit.getPlayerExact(playerName);
         if (player != null && player.isOnline()) {
-            deliverToPlayer(player, deliveryId, commands);
+            Bukkit.getScheduler().runTask(plugin, () -> deliverToPlayer(player, deliveryId, commands));
             markComplete(deliveryId);
         } else {
             queueForOffline(playerName, deliveryId, commands);

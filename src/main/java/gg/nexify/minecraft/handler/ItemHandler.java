@@ -2,6 +2,7 @@ package gg.nexify.minecraft.handler;
 
 import gg.nexify.minecraft.NexifyPlugin;
 import gg.nexify.minecraft.util.ColorUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -48,16 +49,21 @@ public class ItemHandler implements CommandHandler {
         Map<Integer, ItemStack> leftover = player.getInventory().addItem(stack);
 
         if (!leftover.isEmpty() && plugin.getConfig().getBoolean("drop-items-when-full", true)) {
-            leftover.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item));
             String prefix = ColorUtil.color(plugin.getConfig().getString("messages.prefix", "&8[&6Nexify&8] "));
             String msg = ColorUtil.color(plugin.getConfig().getString("messages.item-inventory-full",
                     "&cInventário cheio. O item &f{item} &cfoi dropado no chão."));
             player.sendMessage(prefix + msg.replace("{item}", formatName(material.name())));
+            // dropItemNaturally precisa rodar na thread principal
+            Bukkit.getScheduler().runTask(plugin, () ->
+                leftover.values().forEach(item -> player.getWorld().dropItemNaturally(player.getLocation(), item))
+            );
         }
     }
 
     private void removeItem(Player player, Material material, int amount) {
-        player.getInventory().removeItem(new ItemStack(material, amount));
+        Bukkit.getScheduler().runTask(plugin, () ->
+            player.getInventory().removeItem(new ItemStack(material, amount))
+        );
     }
 
     private String formatName(String name) {
